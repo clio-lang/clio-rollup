@@ -6,7 +6,7 @@ import nodePolyfills from "rollup-plugin-polyfill-node";
 import alias from "@rollup/plugin-alias";
 import json from "@rollup/plugin-json";
 import sourcemaps from "rollup-plugin-sourcemaps";
-import { babel } from "@rollup/plugin-babel";
+import { getBabelOutputPlugin as babel } from "@rollup/plugin-babel";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -68,6 +68,10 @@ export default {
     json(),
     commonjs(),
     nodePolyfills({ include: null }),
+    resolve({
+      browser: true,
+    }),
+    babel({ presets: ["@babel/preset-env"] }),
     // In dev mode, call `npm run start` once
     // the bundle has been generated
     !production && serve(),
