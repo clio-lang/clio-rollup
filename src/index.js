@@ -63,6 +63,10 @@ export default {
           find: "worker_threads",
           replacement: "clio-rollup/shim/empty.js",
         },
+        {
+          find: "ws",
+          replacement: "clio-rollup/shim/ws.js",
+        },
       ],
     }),
     json(),
