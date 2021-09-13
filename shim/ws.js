@@ -5,9 +5,10 @@ class WebSocketWrap {
     this.socket = new WebSocket(url);
     this.listeners = {};
     this.socket.onopen = (event) => this.emit("open", event);
-    this.socket.onmessage = (event) => this.emit("message", event.data);
     this.socket.onclose = (event) => this.emit("close", event);
     this.socket.onerror = (event) => this.emit("error", event);
+    this.socket.onmessage = async (event) =>
+      this.emit("message", await event.data.arrayBuffer());
   }
   send(data) {
     return this.socket.send(data);
