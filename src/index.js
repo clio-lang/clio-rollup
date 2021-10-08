@@ -1,12 +1,12 @@
-import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import livereload from "rollup-plugin-livereload";
-import { terser } from "rollup-plugin-terser";
-import nodePolyfills from "rollup-plugin-polyfill-node";
 import alias from "@rollup/plugin-alias";
-import json from "@rollup/plugin-json";
-import sourcemaps from "rollup-plugin-sourcemaps";
 import { getBabelOutputPlugin as babel } from "@rollup/plugin-babel";
+import commonjs from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
+import livereload from "rollup-plugin-livereload";
+import nodePolyfills from "rollup-plugin-polyfill-node";
+import resolve from "@rollup/plugin-node-resolve";
+import sourcemaps from "rollup-plugin-sourcemaps";
+import { terser } from "rollup-plugin-terser";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -40,11 +40,11 @@ const getPlugins = () => [
   alias({
     entries: [
       {
-        find: "main.clio.js",
+        find: "./shim/main.clio.js",
         replacement: "./main.clio.js",
       },
       {
-        find: "worker.clio.js",
+        find: "./shim/worker.clio.js",
         replacement: "clio-rollup/shim/worker.js",
       },
       {
@@ -53,6 +53,18 @@ const getPlugins = () => [
       },
       {
         find: "worker_threads",
+        replacement: "clio-rollup/shim/empty.js",
+      },
+      {
+        find: "net",
+        replacement: "clio-rollup/shim/empty.js",
+      },
+      {
+        find: "url",
+        replacement: "clio-rollup/shim/empty.js",
+      },
+      {
+        find: "child_process",
         replacement: "clio-rollup/shim/empty.js",
       },
       {
